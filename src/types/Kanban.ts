@@ -1,9 +1,10 @@
-export type KanbanTask = {
+export type KanbanTaskType = {
   id: string;
+  title: string;
   content: string;
 }
 
-export type KanbanColumn = {
+export type KanbanColumnType = {
   id: string;
   title: string;
   taskIds: string[];
@@ -11,10 +12,10 @@ export type KanbanColumn = {
 
 export type KanbanData = {
   tasks: {
-    [key: string]: KanbanTask;
+    [key: string]: KanbanTaskType;
   }
   columns: {
-    [key: string]: KanbanColumn;
+    [key: string]: KanbanColumnType;
   }
   columnOrder: string[];
 }

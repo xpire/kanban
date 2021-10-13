@@ -20,10 +20,11 @@ import { KanbanData } from '../types/Kanban';
 
 const initialData: KanbanData = {
   tasks: {
-    'task-1': { id: 'task-1', content: 'Take out the garbage' },
-    'task-2': { id: 'task-2', content: 'Watch my favorite show' },
-    'task-3': { id: 'task-3', content: 'Charge my phone' },
-    'task-4': { id: 'task-4', content: 'Cook dinner' },
+    'task-1': { id: 'task-1', title: 'urgent', content: 'Take out the garbage' },
+    'task-2': { id: 'task-2', title: 'urgent', content: 'Watch my favorite show' },
+    'task-3': { id: 'task-3', title: 'urgent', content: 'Charge my phone' },
+    'task-4': { id: 'task-4', title: 'maybe', content: 'Cook dinner' },
+    'task-5': { id: 'task-5', title: 'this is a big message', content: 'this is a big messagethis is a big messagethis is a big messagethis is a big messagethis is a big messagethis is a big messagethis is a big messagethis is a big messagethis is a big messagethis is a big messagethis is a big messagethis is a big messagethis is a big messagethis is a big messagethis is a big messagethis is a big messagethis is a big messagethis is a big messagethis is a big messagethis is a big messagethis is a big messagethis is a big messagethis is a big messagethis is a big messagethis is a big message' },
   },
   columns: {
     'column-1': {
@@ -34,7 +35,7 @@ const initialData: KanbanData = {
     'column-2': {
       id: 'column-2',
       title: 'In progress',
-      taskIds: [],
+      taskIds: ['task-5'],
     },
     'column-3': {
       id: 'column-3',

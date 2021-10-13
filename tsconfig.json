@@ -18,7 +18,16 @@
       ],
       "@mui/styled-engine": [
         "./node_modules/@mui/styled-engine-sc"
-      ]
+      ],
+      "@Components/*": [
+        "./src/components/*"
+      ],
+      "@Theme/*": [
+        "./src/theme/*"
+      ],
+      "@Types/*": [
+        "./src/types/*"
+      ],
     }
   },
   "include": [

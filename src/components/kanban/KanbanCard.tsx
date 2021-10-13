@@ -6,27 +6,34 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
-import { KanbanTask } from '../../types/Kanban'
+import { KanbanTaskType } from '@Types/Kanban';
 
-type KanbanCardProps = KanbanTask & {
+type KanbanCardProps = KanbanTaskType & {
   index: number;
 }
 
 const StyledCard = styled(Card)`
-  background-color: ${(props: CardProps & { isDragging: boolean }) => props.isDragging ? "rgba(256,256,0,0.5)" : 'white'};
-  backdrop-filter: ${(props: CardProps & { isDragging: boolean }) => props.isDragging ? "blur(5px)" : ''};
+  background-color: ${(props: CardProps & { isdragging: boolean }) => props.isdragging ? "rgba(256,256,256,0.8)" : 'white'};
+  backdrop-filter: ${(props: CardProps & { isdragging: boolean }) => props.isdragging ? "blur(5px)" : ''};
   margin: 10px;
+  max-width: 280px;
 `;
 
-const KanbanCard = ({ id, content, index }: KanbanCardProps) => (
+const KanbanCard = ({ id, title, content, index }: KanbanCardProps) => (
   <Draggable draggableId={id} index={index}>
     {
       (provided, snapshot) => (
-        <StyledCard {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} isDragging={snapshot.isDragging}>
+        <StyledCard
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+          isdragging={snapshot.isDragging}
+        >
           <CardContent>
             <Typography variant="h5">
-              {id}
+              {title}
             </Typography>
             <Typography>
               {content}

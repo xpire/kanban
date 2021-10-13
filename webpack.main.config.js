@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
   /**
    * This is the main entry point for your application, it's the first file
@@ -9,6 +11,11 @@ module.exports = {
     rules: require('./webpack.rules'),
   },
   resolve: {
-    extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json']
+    extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json'],
+    alias: {
+      '@Components': path.resolve(__dirname, 'src/components/'),
+      '@Theme': path.resolve(__dirname, 'src/theme/'),
+      '@Types': path.resolve(__dirname, 'src/types/')
+    },
   },
 };

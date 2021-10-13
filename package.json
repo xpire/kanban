@@ -2,7 +2,7 @@
   "name": "kanban",
   "productName": "kanban",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "Cross Platform Kanban Dashboard for your personal management needs.",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
@@ -70,6 +70,7 @@
     "@types/react-beautiful-dnd": "^13.1.2",
     "@types/react-dom": "^17.0.9",
     "@types/styled-components": "^5.1.15",
+    "@types/uuid": "^8.3.1",
     "@typescript-eslint/eslint-plugin": "^4.0.1",
     "@typescript-eslint/parser": "^4.0.1",
     "@vercel/webpack-asset-relocator-loader": "1.7.0",
@@ -93,7 +94,8 @@
     "react": "^17.0.2",
     "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^17.0.2",
-    "styled-components": "^5.3.1"
+    "styled-components": "^5.3.1",
+    "uuid": "^8.3.2"
   },
   "resolutions": {
     "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest"
