@@ -1,53 +1,94 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import styled from 'styled-components';
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import Stack from '@mui/material/Stack';
+import { KanbanData } from '../../types/Kanban'
+import KanbanColumn from './KanbanColumn';
 
-import { KanbanTask, KanbanColumn, KanbanData } from '../../types/Kanban'
+const ColumnWrapper = styled.div`
+display: flex;
+`;
 
-const KanbanCard = ({ id, content }: KanbanTask) => (
-  <Card>
-    <CardContent>
-      <Typography variant="h5">
-        {id}
-      </Typography>
-      <Typography>
-        {content}
-      </Typography>
-    </CardContent>
-    <CardActions>
-      <Button>edit</Button>
-    </CardActions>
-  </Card>
-);
+const Kanban = (kanbanData: KanbanData) => {
+  const [state, setState] = useState(kanbanData);
 
-type KanbanColumnProps = {
-  column: KanbanColumn;
-  tasks: KanbanTask[];
-}
+  const onDragEnd = (result: DropResult) => {
+    // console.log(state)
+    // console.log(result)
+    const { destination, source, draggableId } = result;
 
-const KanbanColumn = ({ column, tasks }: KanbanColumnProps) => (
-  <Stack direction="column" spacing={2}>
-    <Typography variant="h4">{column.title}</Typography>
-    {tasks.map((taskData) => (
-      <KanbanCard {...taskData} />
-    ))}
-  </Stack>
-);
+    if (!destination) {
+      return;
+    }
 
-const Kanban = ({ tasks, columns, columnOrder }: KanbanData) => {
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    const start = state.columns[source.droppableId];
+    const finish = state.columns[destination.droppableId];
+
+    if (start === finish) {
+      const newTaskIds = Array.from(start.taskIds);
+      newTaskIds.splice(source.index, 1);
+      newTaskIds.splice(destination.index, 0, draggableId);
+
+      const newColumn = {
+        ...start,
+        taskIds: newTaskIds,
+      };
+
+      const newState = {
+        ...state,
+        columns: {
+          ...state.columns,
+          [newColumn.id]: newColumn,
+        },
+      };
+
+      setState(newState);
+      return;
+    }
+
+    // Moving from one list to another
+    const startTaskIds = Array.from(start.taskIds);
+    startTaskIds.splice(source.index, 1);
+    const newStart = {
+      ...start,
+      taskIds: startTaskIds,
+    };
+
+    const finishTaskIds = Array.from(finish.taskIds);
+    finishTaskIds.splice(destination.index, 0, draggableId);
+    const newFinish = {
+      ...finish,
+      taskIds: finishTaskIds,
+    };
+
+    const newState = {
+      ...state,
+      columns: {
+        ...state.columns,
+        [newStart.id]: newStart,
+        [newFinish.id]: newFinish,
+      },
+    };
+    setState(newState);
+    // console.log(newState)
+  };
+
   return (
-    <>
-      {columnOrder.map(columnId => {
-        const column = columns[columnId];
-        const columnTasks = column.taskIds.map(taskId => tasks[taskId]);
-        return <KanbanColumn key={column.id} column={column} tasks={columnTasks} />
-      })}
-    </>
+    <DragDropContext onDragEnd={onDragEnd}>
+      <ColumnWrapper>
+        {state.columnOrder.map(columnId => {
+          const column = state.columns[columnId];
+          const columnTasks = column.taskIds.map(taskId => state.tasks[taskId]);
+          return (<KanbanColumn key={column.id} column={column} tasks={columnTasks} />)
+        })}
+      </ColumnWrapper>
+    </DragDropContext>
   );
 }
 
